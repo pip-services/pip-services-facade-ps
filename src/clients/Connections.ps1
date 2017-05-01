@@ -37,8 +37,8 @@ PS> $test = Open-PipConnection -Name "test" -Host "172.16.141.175" -Post 28800
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true, Position = 0, ValueFromPipelineByPropertyName=$true)]
-        [string] $Name,
+        [Parameter(Mandatory=$false, Position = 0, ValueFromPipelineByPropertyName=$true)]
+        [string] $Name = "default",
         [Parameter(Mandatory=$false, Position = 1, ValueFromPipelineByPropertyName=$true)]
         [string] $Protocol = "http",
         [Parameter(Mandatory=$true, Position = 2, ValueFromPipelineByPropertyName=$true)]
@@ -54,7 +54,14 @@ PS> $test = Open-PipConnection -Name "test" -Host "172.16.141.175" -Post 28800
         $connection = @{ Name=$Name; Protocol=$Protocol; Host=$Host; Port=$Port; Headers=$Headers }
         $Script:SelectedPipConnection = $connection
         $Script:OpenPipConnections = $OpenPipConnections | Where-Object { $_.Name -ne $Name }
-        $Script:OpenPipConnections += $connection
+        ## We had problems with adding elements in PS 6.0 Alpha
+        if ($OpenPipConnections -eq $null) {
+            $Script:OpenPipConnections = @( $connection )
+        } elseif ($OpenPipConnections.GetType().IsArray -eq $false) {
+            $Script:OpenPipConnections = @( $OpenPipConnections, $connection )
+        } else {
+            $Script:OpenPipConnections += $connection
+        }
         Write-Output $connection
     }
     end {}

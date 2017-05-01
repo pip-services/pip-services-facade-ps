@@ -55,7 +55,7 @@ function UploadFile
         if ($mimeType) { $ContentType = $mimeType }
         else { $ContentType = "application/octet-stream" }
 
-        $httpClient = New-Object System.Net.Http.Httpclient
+        $httpClient = New-Object System.Net.Http.HttpClient
  
         $file = Get-Item -Path $InFile
         $stream = New-Object System.IO.FileStream @($file.FullName, [System.IO.FileMode]::Open)
