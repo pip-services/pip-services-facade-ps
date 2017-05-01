@@ -55,6 +55,8 @@ function UploadFile
         if ($mimeType) { $ContentType = $mimeType }
         else { $ContentType = "application/octet-stream" }
 
+        ## Load assembly cause PS on Windows complains
+        $null = Add-Type -AssemblyName "System.Net.Http"
         $httpClient = New-Object System.Net.Http.HttpClient
  
         $file = Get-Item -Path $InFile
