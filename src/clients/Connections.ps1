@@ -17,9 +17,13 @@ Opens a new connection with client facade
 
 Open-PipConnection opens a new connection with client facade
 
-.PARAMETER Name
+.PARAMETER Name (default: "default")
 
 A name to refer to the client facade
+
+.PARAMETER Protocol
+
+A facade communication protocol (default: http)
 
 .PARAMETER Host
 
@@ -28,6 +32,10 @@ A facade hostname or IP address
 .PARAMETER Port
 
 A facade port to access the cluster (default: 80)
+
+.PARAMETER Headers
+
+A HTTP headers to be attached to every request
 
 .EXAMPLE
 
