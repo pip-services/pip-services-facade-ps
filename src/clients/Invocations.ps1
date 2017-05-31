@@ -113,7 +113,7 @@ function Invoke-PipFacade
         $Connection = if ($Connection -eq $null) { Get-PipConnection -Name $Name } else {$Connection}
         if ($Connection -eq $null) 
         {
-            throw "PipConnection is not defined. Please, use Open-PipConnection or Select-PipConnection"
+            throw "Connection is not opened. Please, use Open-PipConnection or Select-PipConnection"
         }
 
         ## Construct URI with parameters
